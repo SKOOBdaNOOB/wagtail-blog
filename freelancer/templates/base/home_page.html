@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+{% load static wagtailimages_tags wagtailcore_tags %}
+
+{% block extracss %}
+{% static "css/quote_test.css" %}
+{% endblock extracss %}
+
+{% block content %}
+<div class="homepage">
+
+    <!-- Hero Section -->
+    <section class="py-20 md:py-32 bg-base-200">
+        <div class="container px-4 mx-auto">
+            <div class="max-w-7xl mx-auto">
+                <div class="flex flex-wrap -mx-4">
+                    <div class="lg:w-1/2 px-4 mb-16 lg:mb-0">
+                        <div class="max-w-lg mx-auto lg:mx-0">
+                            <span class="inline-block py-1 px-3 mb-5 text-xs font-semibold bg-orange-50 rounded-full text-orange-900">👋 Welcome to My Blog</span>
+                            <h1 class="font-heading text-5xl xs:text-6xl md:text-7xl font-bold mb-5 text-base-content">
+                                <span>{{ page.hero_title }}</span>
+                            </h1>
+                            <p class="max-w-md text-xl font-semibold text-secondary">{{ page.hero_text }}</p>
+                            {% if page.hero_cta_link %}
+                            <a href="{% pageurl page.hero_cta_link %}" class="mt-8 btn btn-primary">
+                                {{ page.hero_cta }}
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-1/2 px-4">
+                        <div class="flex flex-col max-w-lg mx-auto lg:mr-0">
+                            <div class="w-3/4 xs:w-80 mb-4 py-8 px-7 bg-white rounded-3xl shadow-lg">
+                                <div class="flex items-center">
+                                    {% if page.achievement_card_1_image %}
+                                    {% picture page.achievement_card_1_image format-{avif,webp,png,jpeg} fill-60x60 class="block mr-6" %}
+                                    {% else %}
+                                    <img class="block mr-6" src="https://via.placeholder.com/60" alt="Placeholder Icon">
+                                    {% endif %}
+                                    <div>
+                                        <span class="block text-3xl font-bold leading-none text-primary">{{ page.achievement_card_1_num }}</span>
+                                        <span class="text-sm text-secondary">{{ page.achievement_card_1_text }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="self-end w-3/4 xs:w-80 mb-4 py-8 px-7 bg-white rounded-3xl shadow-lg">
+                                <div class="flex items-center">
+                                    {% if page.achievement_card_2_image %}
+                                    {% picture page.achievement_card_2_image format-{avif,webp,png,jpeg} fill-60x60 class="block mr-6" %}
+                                    {% else %}
+                                    <img class="block mr-6" src="https://via.placeholder.com/60" alt="Placeholder Icon">
+                                    {% endif %}
+                                    <div>
+                                        <span class="block text-3xl font-bold leading-none text-primary">{{ page.achievement_card_2_num }}</span>
+                                        <span class="text-sm text-secondary">{{ page.achievement_card_2_text }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="w-3/4 xs:w-80 py-8 px-7 bg-white rounded-3xl shadow-lg">
+                                <div class="flex items-center">
+                                    {% if page.achievement_card_3_image %}
+                                    {% picture page.achievement_card_3_image format-{avif,webp,png,jpeg} fill-60x60 class="block mr-6" %}
+                                    {% else %}
+                                    <img class="block mr-6" src="https://via.placeholder.com/60" alt="Placeholder Icon">
+                                    {% endif %}
+                                    <div>
+                                        <span class="block text-3xl font-bold leading-none text-primary">{{ page.achievement_card_3_num }}</span>
+                                        <span class="text-sm text-secondary">{{ page.achievement_card_3_text }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Promo Section -->
+    {% if page.promo_image or page.promo_title or page.promo_text %}
+    <div class="container mx-auto my-12 p-6 bg-base-100 shadow-md rounded-lg">
+        <div class="flex flex-col md:flex-row items-center">
+            {% if page.promo_image %}
+            <div class="md:w-1/2 mb-6 md:mb-0">
+                {% image page.promo_image fill-590x413-c100 class="rounded-lg shadow-md" %}
+            </div>
+            {% endif %}
+            <div class="md:w-1/2 md:pl-6">
+                {% if page.promo_title %}
+                    <h2 class="text-3xl font-bold mb-4">{{ page.promo_title }}</h2>
+                {% endif %}
+                {% if page.promo_text %}
+                    <div class="prose">{{ page.promo_text|richtext }}</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Body Section -->
+    {% if page.body %}
+    <div class="container mx-auto my-12 p-6 bg-base-100 shadow-md rounded-lg">
+        <div class="prose max-w-none">
+            {{ page.body }}
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Featured Sections -->
+    <section class="py-20 md:py-32 bg-base-200">
+        <div class="container px-4 mx-auto">
+            <div class="max-w-7xl mx-auto">
+                {% if page.featured_section_1 or page.featured_section_2 or page.featured_section_3 %}
+                <div class="flex flex-wrap -mx-4">
+                    {% if page.featured_section_1 %}
+                    <div class="w-full lg:w-1/3 px-4 mb-8 lg:mb-0">
+                        <h2 class="text-3xl font-bold mb-4 text-base-content">{{ page.featured_section_1_title }}</h2>
+                        <ul class="space-y-4">
+                            {% for childpage in page.featured_section_1.specific.children|slice:"3" %}
+                            <li>
+                                {% include "includes/card/listing-card.html" with page=childpage %}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+
+                    {% if page.featured_section_2 %}
+                    <div class="w-full lg:w-1/3 px-4 mb-8 lg:mb-0">
+                        <h2 class="text-3xl font-bold mb-4 text-base-content">{{ page.featured_section_2_title }}</h2>
+                        <ul class="space-y-4">
+                            {% for childpage in page.featured_section_2.specific.children|slice:"3" %}
+                            <li>
+                                {% include "includes/card/location-card.html" with page=childpage %}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+
+                    {% if page.featured_section_3 %}
+                    <div class="w-full lg:w-1/3 px-4">
+                        <h2 class="text-3xl font-bold mb-4 text-base-content">{{ page.featured_section_3_title }}</h2>
+                        <ul class="space-y-4">
+                            {% for childpage in page.featured_section_3.specific.children|slice:"6" %}
+                            <li>
+                                {% include "includes/card/picture-card.html" with page=childpage portrait=True %}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+                </div>
+                {% else %}
+                <div class="text-center">
+                    <span class="inline-block py-1 px-3 mb-5 text-xs font-semibold text-gray-700 bg-gray-100 rounded-full">🚧 Coming Soon</span>
+                    <h2 class="text-4xl font-bold mb-5 text-base-content">Exciting Features are on the Way!</h2>
+                    <p class="text-lg text-secondary">We're working hard to bring you new and exciting content. Stay tuned for updates!</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock content %}

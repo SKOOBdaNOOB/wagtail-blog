@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags wagtailimages_tags %}
+
+    {% block title %}
+        {% if self.seo_title %}{{ self.seo_title }}{% else %}{{ self.title }}{% endif %}: {{ tag }}
+    {% endblock %}
+
+    {% block search_description %}Viewing all blog posts sorted by the tag {{ tag }}{% endblock %}
+
+{% block content %}
+
+
+{% endblock content %}
