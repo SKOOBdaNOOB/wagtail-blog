@@ -15,22 +15,22 @@ from wagtail.search import index
 from freelancer.base.blocks import BaseStreamBlock
 
 
-# class BlogPersonRelationship(Orderable, models.Model):
-#     """
-#     This defines the relationship between the `Person` within the `base`
-#     app and the BlogPage below. This allows people to be added to a BlogPage.
+class BlogPersonRelationship(Orderable, models.Model):
+    """
+    This defines the relationship between the `Person` within the `base`
+    app and the BlogPage below. This allows people to be added to a BlogPage.
 
-#     We have created a two way relationship between BlogPage and Person using
-#     the ParentalKey and ForeignKey
-#     """
+    We have created a two way relationship between BlogPage and Person using
+    the ParentalKey and ForeignKey
+    """
 
-#     page = ParentalKey(
-#         "BlogPage", related_name="blog_person_relationship", on_delete=models.CASCADE
-#     )
-#     person = models.ForeignKey(
-#         "base.Person", related_name="person_blog_relationship", on_delete=models.CASCADE
-#     )
-#     panels = [FieldPanel("person")]
+    page = ParentalKey(
+        "BlogPage", related_name="blog_person_relationship", on_delete=models.CASCADE
+    )
+    person = models.ForeignKey(
+        "base.Person", related_name="person_blog_relationship", on_delete=models.CASCADE
+    )
+    panels = [FieldPanel("person")]
 
 
 class BlogPageTag(TaggedItemBase):
@@ -76,14 +76,14 @@ class BlogPage(Page):
         FieldPanel("image"),
         FieldPanel("body"),
         FieldPanel("date_published"),
-        # MultipleChooserPanel(
-        #     "blog_person_relationship",
-        #     chooser_field_name="person",
-        #     heading="Authors",
-        #     label="Author",
-        #     panels=None,
-        #     min_num=1,
-        # ),
+        MultipleChooserPanel(
+            "blog_person_relationship",
+            chooser_field_name="person",
+            heading="Authors",
+            label="Author",
+            panels=None,
+            min_num=1,
+        ),
         FieldPanel("tags"),
     ]
 
