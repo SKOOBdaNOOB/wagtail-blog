@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.exceptions import ValidationError
 from django.contrib.contenttypes.fields import GenericRelation
 
 from wagtail.admin.panels import (
@@ -110,7 +111,7 @@ class Person(
 
     @property
     def preview_modes(self):
-        return PreviewableMixin.DEFAULT_PREVIEW_MODES + [("blog_post", _("Blog post"))]
+        return PreviewableMixin.DEFAULT_PREVIEW_MODES + [("blog_post", ("Blog post"))]
 
     def __str__(self):
         return "{} {}".format(self.first_name, self.last_name)
@@ -159,11 +160,7 @@ class FooterContent(models.Model):
     This model provides editable text for the site footer as well as social media links.
     It is registered as a Wagtail snippet and can be edited via the Wagtail admin interface.
     """
-
-    # Footer text field
-    footer_text = models.CharField(max_length=120, verbose_name="Footer Text", blank=True)
-
-    # Social media links
+    footer_text = models.CharField(max_length=255, verbose_name="Footer Text", blank=True)
     twitter_url = models.URLField(verbose_name="Twitter URL", blank=True)
     github_url = models.URLField(verbose_name="GitHub URL", blank=True)
     linkedin_url = models.URLField(verbose_name="LinkedIn URL", blank=True)
@@ -182,6 +179,11 @@ class FooterContent(models.Model):
 
     def __str__(self):
         return "Footer Content"
+
+    def save(self, *args, **kwargs):
+        if not self.pk and FooterContent.objects.exists():
+            raise ValidationError("There can be only one FooterContent instance.")
+        return super(FooterContent, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name = "Footer Content"
