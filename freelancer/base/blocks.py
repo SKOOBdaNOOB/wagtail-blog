@@ -1,6 +1,7 @@
 from wagtail.blocks import (
     CharBlock,
     ChoiceBlock,
+    ListBlock,
     RichTextBlock,
     StreamBlock,
     StructBlock,
@@ -60,6 +61,47 @@ class BlockQuote(StructBlock):
         template = "blocks/blockquote.html"
 
 
+class CodeLineBlock(StructBlock):
+    """
+    Custom 'StructBlock' that allows the user to apply lines of code to their pages
+    """
+    prefix = CharBlock(
+        required=False,
+        max_length=10,
+        help_text="Optional prefix (e.g., $, >) for the code line.",
+        label="Data Prefix",
+    )
+    content = TextBlock(
+        required=True,
+        help_text="The code or message to display.",
+        label="Code Line",
+    )
+    css_class = CharBlock(
+        required=False,
+        max_length=100,
+        help_text="Optional CSS class for styling (e.g., text-warning, text-success).",
+        label="CSS Class",
+    )
+
+    class Meta:
+        template = "blocks/code_line.html"
+        icon = "code"
+        label = "Code Line"
+
+class CodeMockupBlock(StructBlock):
+    """
+    Custom 'StructBlock' that combines the different code lines into a "code mockup" component designed by daisyUI
+    https://daisyui.com/components/mockup-code/
+    """
+    lines = ListBlock(CodeLineBlock())
+
+    class Meta:
+        template = "blocks/code_mockup.html"
+        icon = "code"
+        label = "Code Mockup"
+
+
+
 # StreamBlocks
 class BaseStreamBlock(StreamBlock):
     """
@@ -72,19 +114,10 @@ class BaseStreamBlock(StreamBlock):
     )
     image_block = ImageBlock()
     block_quote = BlockQuote()
+    code_block = CodeMockupBlock()
     embed_block = EmbedBlock(
         help_text="Insert an embed URL e.g https://www.youtube.com/watch?v=SGJFWirQ3ks",
         icon="media",
         template="blocks/embed_block.html",
     )
 
-# class CodeBlock(StructBlock):
-#     """
-#     Custom `StructBlock` that allows the user to attribute a quote to the author
-#     """
-
-#     text = TextBlock()
-
-#     class Meta:
-#         icon = "code"
-#         template = "blocks/codeblock.html"

@@ -16,10 +16,10 @@
                 {% include "base/include/header-index.html" %}
             {% endif %}
 
-            <div class="text-center mb-12">
-                <h1 class="text-4xl md:text-6xl font-bold mb-4">Blog</h1>
+            <div class="container text-center mb-12">
+                <h1 class="text-4xl md:text-6xl font-bold mb-4">Blog Posts</h1>
                 {% if tag %}
-                    <p class="text-lg text-gray-500">Viewing all blog posts tagged with <span class="text-primary">{{ tag }}</span>.</p>
+                    <p class="text-lg text-base-content">Viewing all blog posts tagged with <span class="text-primary">{{ tag }}</span>.</p>
                 {% endif %}
             </div>
 
