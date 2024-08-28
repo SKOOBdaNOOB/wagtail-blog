@@ -15,6 +15,7 @@ from wagtail.models import (
     Page,
     PreviewableMixin,
     RevisionMixin,
+    TranslatableMixin,
     WorkflowMixin,
 )
 
@@ -151,6 +152,40 @@ class Person(
     class Meta:
         verbose_name = "Person"
         verbose_name_plural = "People"
+        
+
+class FooterContent(models.Model):
+    """
+    This model provides editable text for the site footer as well as social media links.
+    It is registered as a Wagtail snippet and can be edited via the Wagtail admin interface.
+    """
+
+    # Footer text field
+    footer_text = models.CharField(max_length=120, verbose_name="Footer Text", blank=True)
+
+    # Social media links
+    twitter_url = models.URLField(verbose_name="Twitter URL", blank=True)
+    github_url = models.URLField(verbose_name="GitHub URL", blank=True)
+    linkedin_url = models.URLField(verbose_name="LinkedIn URL", blank=True)
+
+    panels = [
+        FieldPanel("footer_text"),
+        MultiFieldPanel(
+            [
+                FieldPanel("twitter_url"),
+                FieldPanel("github_url"),
+                FieldPanel("linkedin_url"),
+            ],
+            heading="Social Media Links",
+        )
+    ]
+
+    def __str__(self):
+        return "Footer Content"
+
+    class Meta:
+        verbose_name = "Footer Content"
+        verbose_name_plural = "Footer Content"
 
 
 class HomePage(Page):
@@ -386,3 +421,4 @@ class HomePage(Page):
 
     def __str__(self):
         return self.title
+    

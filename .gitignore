@@ -163,4 +163,5 @@ cython_debug/
 # Styling and Personal development files
 node_modules/
 .DS_Store
-collect_static/
+staticfiles/
+media/

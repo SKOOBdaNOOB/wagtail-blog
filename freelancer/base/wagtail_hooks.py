@@ -1,11 +1,11 @@
 from wagtail import hooks
 from wagtail.admin.filters import WagtailFilterSet
 from wagtail.admin.userbar import AccessibilityItem
-from wagtail.snippets.models import register_snippet
 from wagtail.snippets.views.snippets import SnippetViewSet, SnippetViewSetGroup
+from wagtail.snippets.models import register_snippet
 
 from freelancer.base.filters import RevisionFilterSetMixin
-from freelancer.base.models import Person
+from freelancer.base.models import Person, FooterContent
 
 """
 N.B. To see what icons are available for use in Wagtail menus and StreamField block types,
@@ -56,40 +56,40 @@ class PersonFilterSet(RevisionFilterSetMixin, WagtailFilterSet):
 
 
 class PersonViewSet(SnippetViewSet):
-    # Instead of decorating the Person model class definition in models.py with
-    # @register_snippet - which has Wagtail automatically generate an admin interface for this model - we can also provide our own
-    # SnippetViewSet class which allows us to customize the admin interface for this snippet.
-    # See the documentation for SnippetViewSet for more details
-    # https://docs.wagtail.org/en/stable/reference/viewsets.html#snippetviewset
+    # Custom SnippetViewSet class for the Person model.
     model = Person
-    menu_label = "People"  # ditch this to use verbose_name_plural from model
-    #icon = "group"  # change as required
+    menu_label = "Authors"
+    icon = "pen"
     list_display = ("first_name", "last_name", "job_title", "thumb_image")
     list_export = ("first_name", "last_name", "job_title")
     filterset_class = PersonFilterSet
 
 
-# class FooterTextFilterSet(RevisionFilterSetMixin, WagtailFilterSet):
-#     class Meta:
-#         model = FooterText
-#         fields = {
-#             "live": ["exact"],
-#         }
+class FooterContentFilterSet(RevisionFilterSetMixin, WagtailFilterSet):
+    class Meta:
+        model = FooterContent
+        fields = {
+            "footer_text": ["icontains"],
+        }
 
 
-# class FooterTextViewSet(SnippetViewSet):
-#     model = FooterText
-#     search_fields = ("body",)
-#     filterset_class = FooterTextFilterSet
+class FooterContentViewSet(SnippetViewSet):
+    # Custom SnippetViewSet class for the FooterContent model.
+    model = FooterContent
+    menu_label = "Footer Content"
+    icon = "site"
+    list_display = ("footer_text",)
+    search_fields = ("footer_text", "twitter_url", "github_url", "linkedin_url")
+    filterset_class = FooterContentFilterSet
 
 
-class AuthorSnippetViewSetGroup(SnippetViewSetGroup):
-    menu_label = "Authors"
-    menu_icon = "pen"  # change as required
-    menu_order = 300  # will put in 4th place (000 being 1st, 100 2nd)
-    items = (PersonViewSet)
+class BlogSnippetViewSetGroup(SnippetViewSetGroup):
+    menu_label = "Blog Misc."
+    menu_icon = "code"
+    menu_order = 300
+    items = (PersonViewSet, FooterContentViewSet)
 
 
-# When using a SnippetViewSetGroup class to group several SnippetViewSet classes together,
-# you only need to register the SnippetViewSetGroup class with Wagtail:
-register_snippet(AuthorSnippetViewSetGroup)
+# Register the SnippetViewSetGroup class with Wagtail
+register_snippet(BlogSnippetViewSetGroup)
+
