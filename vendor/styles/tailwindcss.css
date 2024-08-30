@@ -1,3 +1,64 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Custom CSS to use daisyUI code-mockup component with tailwind typography "prose" style */
+.mockup-code pre {
+    margin: 0; /* Remove any margin */
+    padding: 0.25rem 0; /* Minimal padding for better readability */
+    line-height: 1.4; /* Adjust line height for more compact appearance */
+    align-items: center; /* Center-align prefix and code vertically */
+  }
+  
+  .mockup-code pre::before {
+    margin-right: 0rem; /* No margin between prefix and code */
+    margin-left: 0.5rem; /* Small margin before prefix to align better with code */
+    content: attr(data-prefix); /* Ensure the prefix is displayed properly */
+  }
+  
+  .mockup-code code {
+    padding-left: 0.15rem; /* Reduce left padding for code */
+    margin: 0; /* Remove any extra margin */
+    line-height: 1; /* Ensure line-height is compact */
+  }
+  
+  /* Custom CSS to add a large quotation mark on blockquotes */
+  .stylistic-quote-mark {
+    font-size: 5rem;
+    left: 1%;
+    @apply text-left mr-2 hidden font-serif text-neutral-500 absolute top-0 leading-none;
+  }
+
+  @screen sm {
+    .stylistic-quote-mark {
+      @apply block;
+    }
+  }
+
+/* Custom CSS to expand embeded videos to max size depending on column layout */
+  .embed-container {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    height: 0;
+    overflow: hidden;
+    max-width: 100%;
+    background: #000;
+}
+
+.embed-container iframe,
+.embed-container object,
+.embed-container embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* Custom CSS to expand images to the max based on column layout */
+.image-block img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    max-width: 100%;
+}

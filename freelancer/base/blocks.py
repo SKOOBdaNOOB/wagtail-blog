@@ -101,6 +101,38 @@ class CodeMockupBlock(StructBlock):
         label = "Code Mockup"
 
 
+class TwoColumnBlock(StructBlock):
+    """
+    Custom 'StructBlock' that provides the ability to have 2 columns of different content types side-by-side
+    in a dynamic class for optiminal flexibily. I recommend if you make more custom blocks to place them above 
+    this class and the 'BaseStreamBlock' class so you can register them easily. Any app specific blocks should
+    be applied directly to those app directories.
+    """
+    column_1 = StreamBlock([
+        ('heading', HeadingBlock()),
+        ('paragraph', RichTextBlock(icon="pilcrow", template="blocks/paragraph_block.html")),
+        ('image', ImageBlock()),
+        ('quote', BlockQuote()),
+        ('embed', EmbedBlock(help_text="Insert an embed URL e.g https://www.youtube.com/watch?v=SGJFWirQ3ks", icon="media", template="blocks/embed_block.html")),
+        ('code', CodeMockupBlock()),
+        # Add other blocks as needed
+    ], label="Left Column Content")
+
+    column_2 = StreamBlock([
+        ('heading', HeadingBlock()),
+        ('paragraph', RichTextBlock(icon="pilcrow", template="blocks/paragraph_block.html")),
+        ('image', ImageBlock()),
+        ('quote', BlockQuote()),
+        ('embed', EmbedBlock(help_text="Insert an embed URL e.g https://www.youtube.com/watch?v=SGJFWirQ3ks", icon="media", template="blocks/embed_block.html")),
+        ('code', CodeMockupBlock()),
+        # Add other blocks as needed
+    ], label="Right Column Content")
+
+    class Meta:
+        template = "blocks/two_column_block.html"
+        icon = "columns"
+        label = "Two Columns"
+        
 
 # StreamBlocks
 class BaseStreamBlock(StreamBlock):
@@ -120,4 +152,4 @@ class BaseStreamBlock(StreamBlock):
         icon="media",
         template="blocks/embed_block.html",
     )
-
+    two_column = TwoColumnBlock()

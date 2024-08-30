@@ -1,8 +1,16 @@
 {% load wagtailimages_tags %}
-
-
-<blockquote class="border-l-4 border-base-300 italic my-8 pl-4 md:pl-8 py-4 mx-4 md:mx-10 max-w-md">
-    <p class="text-lg font-medium">{{ self.text }}</p>
-    <cite class="block text-right mt-4 text-base-content font-semibold">- {{ self.attribute_name}}</cite>
-</blockquote>
-
+<div class="container rounded-lg bg-base-300 border-base-100 not-prose mb-8">
+    <blockquote class="relative p-4 text-xl italic text-accent">
+        <div class="stylistic-quote-mark sm:block" aria-hidden="true">
+            &ldquo;
+        </div>
+        <p class="mb-4 p-4 font-serif">{{ self.text }}</p>
+        <cite class="flex items-center">
+            <div class="flex flex-col items-start">
+                <span class="mb-1 text-sm font-bold text-secondary">
+                    – {{ self.attribute_name }}
+                </span>
+            </div>
+        </cite>
+    </blockquote>
+</div>

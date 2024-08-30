@@ -1,3 +1,6 @@
 {% load wagtailimages_tags %}
 
-{{ self }}
+<div class="embed-container mt-10 pb-6" loading="lazy">
+    {{ value.html|safe }}
+</div>
+

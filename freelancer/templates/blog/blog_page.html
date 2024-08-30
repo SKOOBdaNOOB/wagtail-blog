@@ -1,48 +1,59 @@
 {% extends "base.html" %}
-{% load navigation_tags wagtailimages_tags %}
+{% load static navigation_tags wagtailimages_tags %}
+
 
 {% block content %}
-    <div class="container w-3/4 mx-auto my-12 p-6 bg-base-100 shadow-md rounded-lg justify-items-center">
+    <div class="container w-3/4 mx-auto my-10 p-16 bg-base-100 shadow-md rounded-xl justify-items-center">
         <article class="prose lg:prose-xl mx-auto">
-            <header class="mb-8">
-                <h1 class="text-4xl md:text-5xl font-bold">{{ self.title }}</h1>
-                <p class="text-sm text-gray-500">{{ self.first_published_at|date:"F j, Y" }}</p>
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    <div class="lg:col-span-2">
-                        <div class="mb-6 flex items-center space-x-4">
-                            {% if page.authors %}
-                                {% for author in page.authors %}
-                                    <div class="flex items-center space-x-2">
-                                        {% if author.image %}
-                                            <div class="avatar">
-                                                {% image author.image fill-50x50 class="w-48 rounded-full" %}
-                                            </div>
-                                        {% endif %}
-                                        <div>
-                                            <p class="text-lg font-semibold">{{ author.first_name }} {{ author.last_name }}</p>
-                                        </div>
-                                    </div>
-                                {% endfor %}
-                            {% endif %}
-                        </div>
-
-                        <div class="prose prose-lg max-w-none">
-                            {{ page.body }}
-                        </div>
-
-                        {% if page.get_tags %}
-                            <div class="mt-8">
-                                <p class="text-lg font-semibold">Tags</p>
-                                <div class="flex flex-wrap gap-2">
-                                    {% for tag in page.get_tags %}
-                                        <a href="{{ tag.url }}" class="badge badge-outline badge-secondary">{{ tag }}</a>
-                                    {% endfor %}
-                                </div>
-                            </div>
-                        {% endif %}
-                    </div>
-                </div>
+            <header class="mb-3">
+                <h1 class="text-3xl md:text-5xl font-bold">{{ self.title }}</h1>
+                <p class="text-accent font-light leading-snug">{{ self.introduction }}</p>
+                <p class="mb-10 text-sm text-gray-500">{{ self.first_published_at|date:"F j, Y" }}</p>
             </header>
+
+            <div class="flex items-center mx-auto">
+                <div class="">
+                    {% if page.authors %}
+                        <div class="mb-8 not-prose">
+                            <div class="text-left font-semibold text-secondary mb-3">
+                                Author
+                            </div>
+                            {% for author in page.authors %}
+                                <div class="flex items-center space-x-2 mb-4 ml-2">
+                                    {% if author.image %}
+                                        <div class="avatar">
+                                            {% image author.image fill-50x50 class="w-12 rounded-full" %}
+                                        </div>
+                                    {% endif %}
+                                    <div>
+                                        <p class="ml-2 text-lg font-semibold">{{ author.first_name }} {{ author.last_name }}</p>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="w-full not-prose mb-4 mt-2">
+                            <hr class="border-t border-gray-500 w-full prose">
+                        </div>
+                    {% endif %}
+                </div>
+            </div>            
+                
+                <div class="leading-snug">
+                    {{ page.body }}
+                </div>
+
+                {% if page.get_tags %}
+                    <div class="mt-8">
+                        <p class="text-lg font-semibold">Tags</p>
+                        <div class="flex flex-wrap gap-2">
+                            {% for tag in page.get_tags %}
+                                <a href="{{ tag.url }}" class="badge badge-outline badge-secondary">{{ tag }}</a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+                </div>
+            </div>
         </article>
     </div>
 {% endblock content %}
