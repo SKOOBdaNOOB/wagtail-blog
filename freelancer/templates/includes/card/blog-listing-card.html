@@ -1,28 +1,27 @@
 {% load wagtailcore_tags navigation_tags wagtailimages_tags %}
 
-<div class="blog-listing-card">
-    <a class="blog-listing-card__link" href="{% pageurl blog %}">
+<div class="card card-compact bg-base-100 w-96 shadow-xl">
+    <a href="{% pageurl blog %}" class="hover:opacity-90 transition-opacity">
         {% if blog.image %}
-            <figure class="blog-listing-card__image">
-                {% picture blog.image format-{avif,webp,jpeg} fill-322x247-c100 loading="lazy" %}
+            <figure class="relative">
+                {% picture blog.image format-{avif,webp,jpeg} fill-372x247-c100 class="w-full h-64 object-cover rounded-t-lg" loading="lazy" %}
             </figure>
         {% endif %}
-        <div class="blog-listing-card__contents">
-            <h2 class="blog-listing-card__title">{{ blog.title }}</h2>
+        <div class="card-body">
+            <h2 class="card-title text-2xl font-bold text-neutral-content">{{ blog.title }}</h2>
             {% if blog.introduction %}
-                <p class="blog-listing-card__introduction">{{ blog.introduction|truncatewords:15 }}</p>
+                <p class="text-base-content mb-4">{{ blog.introduction|truncatewords:15 }}</p>
             {% endif %}
-            <p class="blog-listing-card__metadata">
-                {% if blog.date_published %}
-                    {{ blog.date_published }} by
-                {% endif %}
-                {% for author in blog.authors %}
-                    {{ author }}{% if not forloop.last %}, {% endif %}
-                {% endfor %}
-            </p>
+            <div class="card-actions justify-between items-center">
+                <p class="text-sm text-gray-400">
+                    {% if blog.date_published %}
+                        {{ blog.date_published|date:"F j, Y" }} by
+                    {% endif %}
+                    {% for author in blog.authors %}
+                        {{ author }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </p>
+            </div>
         </div>
     </a>
 </div>
-
-
-

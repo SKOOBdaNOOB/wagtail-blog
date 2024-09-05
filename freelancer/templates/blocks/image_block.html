@@ -1,6 +1,6 @@
 {% load wagtailimages_tags %}
 
 <figure class="image-block">
-    {% picture self.image format-{avif,webp,png,jpeg} fill-900x506 sizes="100vw" loading="lazy" %}
+    {% picture self.image format-{avif,webp,png,jpeg} max-900x900 class="w-full h-auto object-contain" loading="lazy" %}
     <figcaption class="text-center italic leading-tight">{{ self.caption }} {% if self.attribution %}- {{ self.attribution }}{% endif %}</figcaption>
 </figure>

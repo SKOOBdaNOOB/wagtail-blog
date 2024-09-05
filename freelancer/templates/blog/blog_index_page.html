@@ -16,36 +16,42 @@
                 {% include "base/include/header-index.html" %}
             {% endif %}
 
-            <div class="container text-center mb-12">
-                <h1 class="text-4xl md:text-6xl font-bold mb-4">Blog Posts</h1>
+            <div class="text-center mb-12">
+                <h1 class="text-5xl md:text-7xl font-extrabold mb-6 text-neutral-content">Blog Posts</h1>
                 {% if tag %}
-                    <p class="text-lg text-base-content">Viewing all blog posts tagged with <span class="text-primary">{{ tag }}</span>.</p>
+                    <p class="text-xl text-base-content">
+                        Viewing all blog posts tagged with <span class="text-primary">{{ tag }}</span>.
+                    </p>
                 {% endif %}
             </div>
 
             {% if page.get_child_tags %}
-                <div class="flex justify-center mb-8">
-                    <ul class="flex flex-wrap gap-2">
+                <div class="flex justify-center mb-10">
+                    <ul class="flex flex-wrap gap-4">
                         <li>
-                            <span class="btn btn-sm btn-primary">All</span>
+                            <a href="/blog" class="btn btn-sm btn-primary">
+                                All
+                            </a>
                         </li>
                         {% for tag in page.get_child_tags %}
                             <li>
-                                <a class="btn btn-sm btn-outline" href="{{ tag.url }}">{{ tag }}</a>
+                                <a class="btn btn-sm btn-outline-primary hover:bg-primary hover:text-white transition-all" href="{{ tag.url }}">
+                                    {{ tag }}
+                                </a>
                             </li>
                         {% endfor %}
                     </ul>
                 </div>
             {% endif %}
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
                 {% if posts %}
                     {% for blog in posts %}
                         {% include "includes/card/blog-listing-card.html" %}
                     {% endfor %}
                 {% else %}
                     <div class="col-span-full text-center">
-                        <p class="text-lg text-gray-500">Oh, snap. Looks like we were too busy baking to write any blog posts. Sorry.</p>
+                        <p class="text-xl text-gray-500">Oh, snap! Looks like we were too busy baking to write any blog posts. Sorry.</p>
                     </div>
                 {% endif %}
             </div>

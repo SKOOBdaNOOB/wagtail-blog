@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static wagtailimages_tags wagtailcore_tags %}
+{% load static wagtailimages_tags wagtailcore_tags blog_tags %}
 
 {% block extracss %}
 {% static "css/quote_test.css" %}
@@ -37,7 +37,7 @@
                                     <img class="block mr-6" src="https://via.placeholder.com/60" alt="Placeholder Icon">
                                     {% endif %}
                                     <div>
-                                        <span class="block text-3xl font-bold leading-none text-primary">{{ page.achievement_card_1_num }}</span>
+                                        <span class="block text-3xl font-bold leading-none text-primary">{% if blog_count %}{{ blog_count }}{% else %}N/A{% endif %}</span>
                                         <span class="text-sm text-secondary">{{ page.achievement_card_1_text }}</span>
                                     </div>
                                 </div>

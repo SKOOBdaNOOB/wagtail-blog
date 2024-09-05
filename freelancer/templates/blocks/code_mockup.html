@@ -1,0 +1,5 @@
+<div class="mockup-code">
+    {% for line in self.lines %}
+        {% include 'blocks/code_line.html' with line_context=line %}
+    {% endfor %}
+</div>

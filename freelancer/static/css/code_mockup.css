@@ -1,0 +1,17 @@
+.mockup-code pre {
+  margin: 0; /* Remove any margin */
+  padding: 0.25rem 0; /* Minimal padding for better readability */
+  line-height: 1.4; /* Adjust line height for more compact appearance */
+  align-items: center; /* Center-align prefix and code vertically */
+}
+
+.mockup-code pre::before {
+  margin-right: 0rem; /* No margin between prefix and code */
+  content: attr(data-prefix); /* Ensure the prefix is displayed properly */
+}
+
+.mockup-code code {
+  padding-left: 0.25rem; /* Reduce left padding for code */
+  margin: 0; /* Remove any extra margin */
+  line-height: 1; /* Ensure line-height is compact */
+}

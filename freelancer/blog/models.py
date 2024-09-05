@@ -106,6 +106,7 @@ class BlogPage(Page):
                 person__live=True
             ).select_related("person")
         ]
+        
 
     @property
     def get_tags(self):
